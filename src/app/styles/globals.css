@@ -27,3 +27,21 @@ body {
     text-wrap: balance;
   }
 }
+
+@keyframes toss {
+  0% {
+    transform: translateX(-50%) translateY(120%) rotate(-15deg);
+  }
+
+  50% {
+    transform: translateX(-25%) translateY(-60vh) rotate(0deg);
+  }
+
+  100% {
+    transform: translateX(0%) translateY(120%) rotate(15deg);
+  }
+}
+
+#tossed-image {
+  pointer-events: none;
+}

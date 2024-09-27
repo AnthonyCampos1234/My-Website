@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import ItemPage from '../components/ItemPage';
-import { FaUser } from 'react-icons/fa';
+import { FaFileAlt, FaDownload } from 'react-icons/fa';
 import { useRouter, useSearchParams } from 'next/navigation';
+import '../styles/resume.css';
 
-export default function AboutMe() {
+export default function Resume() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [isVisible, setIsVisible] = useState(false);
@@ -15,7 +16,7 @@ export default function AboutMe() {
         if (transition === 'true') {
             setTimeout(() => {
                 setIsVisible(true);
-                router.replace('/aboutMe');
+                router.replace('/resume');
                 const overlay = document.getElementById('transition-overlay');
                 if (overlay) {
                     overlay.style.opacity = '0';
@@ -36,7 +37,7 @@ export default function AboutMe() {
         overlay.style.left = '0';
         overlay.style.width = '100%';
         overlay.style.height = '100%';
-        overlay.style.backgroundColor = '#FF9600';
+        overlay.style.backgroundColor = '#1CB0F6';
         overlay.style.opacity = '0';
         overlay.style.transition = 'opacity 0.5s ease-in-out';
         overlay.style.zIndex = '1000';
@@ -59,20 +60,30 @@ export default function AboutMe() {
     };
 
     return (
-        <div
-            style={{
-                opacity: isVisible ? 1 : 0,
-                transform: isVisible ? 'scale(1)' : 'scale(0.98)',
-                transition: 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out'
-            }}
-        >
-            <ItemPage Icon={FaUser} title="About Me" color="#FF9600" onBackClick={handleBackClick}>
-                <p>Here's some information about me:</p>
-                <ul>
-                    <li>Fact 1</li>
-                    <li>Fact 2</li>
-                    <li>Fact 3</li>
-                </ul>
+        <div className={`resume-container ${isVisible ? 'visible' : ''}`}>
+            <ItemPage Icon={FaFileAlt} title="My Resumes" color="#1CB0F6" onBackClick={handleBackClick}>
+                <div className="resume-content">
+                    <div className="resume-column">
+                        <h2>Computer Science Resume</h2>
+                        <div className="resume-preview">
+                            {/* Replace with actual preview of CS resume */}
+                            <img src="/cs-resume-preview.jpg" alt="CS Resume Preview" />
+                        </div>
+                        <a href="/path-to-cs-resume.pdf" download className="download-button">
+                            <FaDownload /> Download CS Resume
+                        </a>
+                    </div>
+                    <div className="resume-column">
+                        <h2>Work Experience Resume</h2>
+                        <div className="resume-preview">
+                            {/* Replace with actual preview of work resume */}
+                            <img src="/work-resume-preview.jpg" alt="Work Resume Preview" />
+                        </div>
+                        <a href="/path-to-work-resume.pdf" download className="download-button">
+                            <FaDownload /> Download Work Resume
+                        </a>
+                    </div>
+                </div>
             </ItemPage>
         </div>
     );

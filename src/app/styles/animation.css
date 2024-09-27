@@ -1,0 +1,131 @@
+.animation-container {
+    opacity: 0;
+    transform: scale(0.98);
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.animation-container.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.animation-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.animation-intro,
+.animation-style,
+.animation-projects,
+.animation-inspiration {
+    margin-bottom: 2rem;
+}
+
+h2,
+h3 {
+    color: #FF4B4B;
+    margin-bottom: 1rem;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+ul li {
+    margin-bottom: 0.5rem;
+    color: #cccccc;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.project-item {
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    padding: 1rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.project-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(255, 75, 75, 0.2);
+}
+
+.project-item h4 {
+    color: #FF4B4B;
+    margin: 0.5rem 0;
+}
+
+.project-item p {
+    color: #cccccc;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.play-button {
+    background-color: #FF4B4B;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.video-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.video-content {
+    background-color: #2a2a2a;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 80%;
+}
+
+.video-content h3 {
+    color: #FF4B4B;
+    margin-bottom: 1rem;
+}
+
+.video-content video {
+    width: 100%;
+    max-height: 70vh;
+}
+
+.video-content button {
+    background-color: #FF4B4B;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .video-content {
+        max-width: 95%;
+    }
+}

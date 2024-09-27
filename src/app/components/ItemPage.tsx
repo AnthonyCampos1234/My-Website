@@ -9,7 +9,7 @@ interface ItemPageProps {
     title: string;
     color: string;
     children: React.ReactNode;
-    onBackClick: () => void;  // Add this prop
+    onBackClick: () => void;
 }
 
 export default function ItemPage({ Icon, title, color, children, onBackClick }: ItemPageProps) {

@@ -2,13 +2,17 @@
 
 import { useEffect, useState } from 'react';
 import ItemPage from '../components/ItemPage';
-import { FaCode } from 'react-icons/fa';
+import { FaCode, FaJs, FaReact, FaHtml5, FaNodeJs } from 'react-icons/fa';
+import { SiTypescript, SiPython } from 'react-icons/si';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Image from 'next/image';
+import '../styles/skills.css';
 
 export default function Skills() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [isVisible, setIsVisible] = useState(false);
+    const [expandedSkill, setExpandedSkill] = useState<number | null>(null);
 
     useEffect(() => {
         const transition = searchParams.get('transition');
@@ -66,26 +70,78 @@ export default function Skills() {
         }, 1000);
     };
 
+    const skillCategories = [
+        {
+            category: "Programming Languages",
+            skills: [
+                { name: "JavaScript", Icon: FaJs, description: "Proficient in modern ES6+ features and async programming." },
+                { name: "TypeScript", Icon: SiTypescript, description: "Strong typing for large-scale JavaScript applications." },
+                { name: "Python", Icon: SiPython, description: "Data analysis, web development, and automation." },
+                // Add more skills...
+            ]
+        },
+        {
+            category: "Web Technologies",
+            skills: [
+                { name: "React", Icon: FaReact, description: "Building complex, scalable user interfaces." },
+                { name: "Node.js", Icon: FaNodeJs, description: "Server-side JavaScript for robust backend services." },
+                { name: "HTML5", Icon: FaHtml5, description: "Crafting responsive and accessible web layouts." },
+                // Add more skills...
+            ]
+        },
+        // Add more categories...
+    ];
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            },
+            { threshold: 0.1 }
+        );
+
+        document.querySelectorAll('.skill-category').forEach((item) => {
+            observer.observe(item);
+        });
+
+        return () => observer.disconnect();
+    }, []);
+
+    const handleSkillClick = (index: number) => {
+        setExpandedSkill(expandedSkill === index ? null : index);
+    };
+
     return (
-        <div
-            style={{
-                opacity: isVisible ? 1 : 0,
-                transform: isVisible ? 'scale(1)' : 'scale(0.98)',
-                transition: 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out'
-            }}
-        >
-            <ItemPage Icon={FaCode} title="Skills" color="#FF9600" onBackClick={handleBackClick}>
-                <p>Here are some of my key skills:</p>
-                <ul className="list-disc list-inside mt-4">
-                    <li>JavaScript / TypeScript</li>
-                    <li>React / Next.js</li>
-                    <li>Node.js / Express</li>
-                    <li>Python / Django</li>
-                    <li>SQL / NoSQL Databases</li>
-                    <li>RESTful API Design</li>
-                    <li>Git / Version Control</li>
-                    <li>Responsive Web Design</li>
-                </ul>
+        <div style={{ opacity: isVisible ? 1 : 0, transition: 'opacity 0.5s ease-in-out' }}>
+            <ItemPage Icon={FaCode} title="My Skills" color="#FF9600" onBackClick={handleBackClick}>
+                <div className="skills-container">
+                    {skillCategories.map((category, categoryIndex) => (
+                        <div key={categoryIndex} className="skill-category">
+                            <h2>{category.category}</h2>
+                            <div className="skill-items-container">
+                                {category.skills.map((skill, skillIndex) => (
+                                    <div
+                                        key={skillIndex}
+                                        className={`skill-item ${expandedSkill === skillIndex ? 'expanded' : ''}`}
+                                        onClick={() => handleSkillClick(skillIndex)}
+                                    >
+                                        <div className="skill-logo">
+                                            <skill.Icon size={80} />
+                                        </div>
+                                        <h3>{skill.name}</h3>
+                                        <div className="skill-description">
+                                            <p>{skill.description}</p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
             </ItemPage>
         </div>
     );

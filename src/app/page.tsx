@@ -29,7 +29,7 @@ export default function RootPage() {
       <div className={`home-page ${currentPage === 1 ? 'active' : ''}`}>
         <Home onScrollDown={() => goToPage(2)} />
       </div>
-      <div className={`about-page ${currentPage === 2 ? 'active' : ''}`}>
+      <div className={`anthony-page ${currentPage === 2 ? 'active' : ''}`}>
         <Anthony />
       </div>
       <style jsx>{`
@@ -38,7 +38,7 @@ export default function RootPage() {
           overflow: hidden;
           position: relative;
         }
-        .home-page, .about-page {
+        .home-page, .anthony-page {
           position: absolute;
           top: 0;
           left: 0;
@@ -50,7 +50,7 @@ export default function RootPage() {
           transform: ${currentPage === 1 ? 'translateY(0) scale(1)' : 'translateY(-100%) scale(0.9)'};
           opacity: ${currentPage === 1 ? 1 : 0};
         }
-        .about-page {
+        .anthony-page {
           transform: ${currentPage === 2 ? 'translateY(0) scale(1)' : 'translateY(100%) scale(0.9)'};
           opacity: ${currentPage === 2 ? 1 : 0};
         }

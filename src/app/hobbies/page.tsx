@@ -2,13 +2,21 @@
 
 import { useEffect, useState } from 'react';
 import ItemPage from '../components/ItemPage';
-import { FaGamepad } from 'react-icons/fa';
+import { FaGamepad, FaCode, FaBook, FaMusic, FaCamera } from 'react-icons/fa';
 import { useRouter, useSearchParams } from 'next/navigation';
+import '../styles/hobbies.css';
+
+interface Hobby {
+    name: string;
+    icon: React.ElementType;
+    description: string;
+}
 
 export default function Hobbies() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [isVisible, setIsVisible] = useState(false);
+    const [selectedHobby, setSelectedHobby] = useState<Hobby | null>(null);
 
     useEffect(() => {
         const transition = searchParams.get('transition');
@@ -58,21 +66,50 @@ export default function Hobbies() {
         }, 1000);
     };
 
+    const hobbies: Hobby[] = [
+        {
+            name: "Gaming",
+            icon: FaGamepad,
+            description: "I enjoy playing various video games, especially strategy and RPG genres. Some of my favorites include The Witcher 3, Civilization VI, and Stardew Valley."
+        },
+        {
+            name: "Coding Projects",
+            icon: FaCode,
+            description: "Outside of work, I love working on personal coding projects. This helps me explore new technologies and keep my skills sharp. I'm currently building a mobile app using React Native."
+        },
+        {
+            name: "Reading",
+            icon: FaBook,
+            description: "I'm an avid reader, particularly of science fiction and non-fiction books about technology and science. Some of my favorite authors include Isaac Asimov and Neal Stephenson."
+        },
+        {
+            name: "Music Production",
+            icon: FaMusic,
+            description: "I enjoy creating electronic music in my free time. I use Ableton Live and various VST instruments to produce ambient and downtempo tracks."
+        },
+        {
+            name: "Photography",
+            icon: FaCamera,
+            description: "I love capturing moments through photography. I particularly enjoy landscape and street photography. I use a Sony mirrorless camera for most of my shots."
+        }
+    ];
+
     return (
-        <div
-            style={{
-                opacity: isVisible ? 1 : 0,
-                transform: isVisible ? 'scale(1)' : 'scale(0.98)',
-                transition: 'opacity 0.5s ease-in-out, transform 0.5s ease-in-out'
-            }}
-        >
-            <ItemPage Icon={FaGamepad} title="Hobbies" color="#58CC02" onBackClick={handleBackClick}>
-                <p>Here are some of my hobbies:</p>
-                <ul>
-                    <li>Hobby 1</li>
-                    <li>Hobby 2</li>
-                    <li>Hobby 3</li>
-                </ul>
+        <div className={`hobbies-container ${isVisible ? 'visible' : ''}`}>
+            <ItemPage Icon={FaGamepad} title="My Hobbies" color="#58CC02" onBackClick={handleBackClick}>
+                <div className="hobbies-grid">
+                    {hobbies.map((hobby, index) => (
+                        <div
+                            key={index}
+                            className={`hobby-item ${selectedHobby === hobby ? 'selected' : ''}`}
+                            onClick={() => setSelectedHobby(hobby === selectedHobby ? null : hobby)}
+                        >
+                            <hobby.icon className="hobby-icon" />
+                            <h3>{hobby.name}</h3>
+                            <p className="hobby-description">{hobby.description}</p>
+                        </div>
+                    ))}
+                </div>
             </ItemPage>
         </div>
     );
