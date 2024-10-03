@@ -1,9 +1,9 @@
 "use client";
 
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { FaChevronLeft, FaExternalLinkAlt, FaGithub, FaLaptopCode } from 'react-icons/fa';
 import ItemPage from '../components/ItemPage';
-import { FaLaptopCode, FaGithub, FaExternalLinkAlt } from 'react-icons/fa';
-import { useRouter, useSearchParams } from 'next/navigation';
 import '../styles/projects.css';
 
 interface Project {
@@ -16,92 +16,67 @@ interface Project {
 
 export default function Projects() {
     const router = useRouter();
-    const searchParams = useSearchParams();
     const [isVisible, setIsVisible] = useState(false);
-    const [selectedProject, setSelectedProject] = useState<number | null>(null);
 
     useEffect(() => {
-        const transition = searchParams.get('transition');
-        if (transition === 'true') {
-            setTimeout(() => {
-                setIsVisible(true);
-                router.replace('/projects');
-                const overlay = document.getElementById('transition-overlay');
-                if (overlay) {
-                    overlay.style.opacity = '0';
-                    overlay.addEventListener('transitionend', () => {
-                        overlay.remove();
-                    }, { once: true });
-                }
-            }, 600);
-        } else {
-            setIsVisible(true);
-        }
-    }, [searchParams, router]);
+        setIsVisible(true);
+    }, []);
 
     const handleBackClick = () => {
-        const overlay = document.createElement('div');
-        overlay.style.position = 'fixed';
-        overlay.style.top = '0';
-        overlay.style.left = '0';
-        overlay.style.width = '100%';
-        overlay.style.height = '100%';
-        overlay.style.backgroundColor = '#2B70C9';
-        overlay.style.opacity = '0';
-        overlay.style.transition = 'opacity 0.5s ease-in-out';
-        overlay.style.zIndex = '1000';
-
-        document.body.appendChild(overlay);
-
-        requestAnimationFrame(() => {
-            overlay.style.opacity = '1';
-        });
-
-        setTimeout(() => {
-            router.push('/?return=true');
-            setTimeout(() => {
-                overlay.style.opacity = '0';
-                overlay.addEventListener('transitionend', () => {
-                    document.body.removeChild(overlay);
-                }, { once: true });
-            }, 500);
-        }, 1000);
+        router.push('/anthony');
     };
 
     const projects: Project[] = [
         {
-            title: "Personal Portfolio",
-            description: "A responsive portfolio website showcasing my skills and projects.",
-            technologies: ["React", "Next.js", "TypeScript", "Tailwind CSS"],
-            githubLink: "https://github.com/yourusername/portfolio",
-            liveLink: "https://yourportfolio.com"
+            title: "Avisari",
+            description: "University Advising and Student Success Platform",
+            technologies: ["TypeScript"],
+            githubLink: "https://github.com/AnthonyCampos1234/Avisari",
+            liveLink: "https://avisari.com"
         },
         {
-            title: "Task Manager App",
-            description: "A full-stack task management application with user authentication.",
-            technologies: ["Node.js", "Express", "MongoDB", "React"],
-            githubLink: "https://github.com/yourusername/task-manager"
+            title: "My-Website",
+            description: "Anthony Campos Portfolio Website",
+            technologies: ["TypeScript", "Next.js", "React"],
+            githubLink: "https://github.com/AnthonyCampos1234/My-Website",
+            liveLink: "https://anthony.campos"
         },
         {
-            title: "Weather Dashboard",
-            description: "A weather application that displays current and forecasted weather data.",
-            technologies: ["JavaScript", "HTML", "CSS", "OpenWeather API"],
-            githubLink: "https://github.com/yourusername/weather-dashboard",
-            liveLink: "https://yourweatherapp.com"
+            title: "Nota",
+            description: "Everything App for Students",
+            technologies: ["JavaScript"],
+            githubLink: "https://github.com/AnthonyCampos1234/Nota",
         },
-        // Add more projects as needed
+        {
+            title: "EduConnect",
+            description: "Educational platform",
+            technologies: ["HTML"],
+            githubLink: "https://github.com/AnthonyCampos1234/educonnect",
+        },
+        {
+            title: "Dormeal",
+            description: "The dormeal web app MVP",
+            technologies: ["HTML"],
+            githubLink: "https://github.com/AnthonyCampos1234/dormeal",
+            liveLink: "https://dormeal.com"
+        },
+        {
+            title: "BillsForKids",
+            description: "A Fun Financial Education Game",
+            technologies: ["Java"],
+            githubLink: "https://github.com/AnthonyCampos1234/BillsForKids",
+        },
     ];
 
     return (
         <div className={`projects-container ${isVisible ? 'visible' : ''}`}>
-            <ItemPage Icon={FaLaptopCode} title="My Projects" color="#2B70C9" onBackClick={handleBackClick}>
+            <div className="playful-back-button" onClick={handleBackClick}>
+                <FaChevronLeft />
+            </div>
+            <ItemPage Icon={FaLaptopCode} title="My Projects" color="#2B70C9">
                 <div className="projects-grid">
                     {projects.map((project, index) => (
-                        <div
-                            key={index}
-                            className={`project-item ${selectedProject === index ? 'expanded' : ''}`}
-                            onClick={() => setSelectedProject(selectedProject === index ? null : index)}
-                        >
+                        <div key={index} className="project-item">
                             <h3>{project.title}</h3>
                             <p className="project-description">{project.description}</p>
                             <div className="project-technologies">
@@ -115,7 +90,7 @@ export default function Projects() {
                                 </a>
                                 {project.liveLink && (
                                     <a href={project.liveLink} target="_blank" rel="noopener noreferrer">
-                                        <FaExternalLinkAlt /> Live Demo
+                                        <FaExternalLinkAlt /> Live Link
                                     </a>
                                 )}
                             </div>
@@ -123,6 +98,33 @@ export default function Projects() {
                     ))}
                 </div>
             </ItemPage>
+            <style jsx>{`
+                .playful-back-button {
+                    position: fixed;
+                    top: 20px;
+                    left: 20px;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    background-color: #2B70C9;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    z-index: 1000;
+                }
+
+                .playful-back-button:hover {
+                    transform: scale(1.1);
+                    box-shadow: 0 0 15px rgba(43, 112, 201, 0.5);
+                }
+
+                .playful-back-button :global(svg) {
+                    color: white;
+                    font-size: 24px;
+                }
+            `}</style>
         </div>
     );
 }

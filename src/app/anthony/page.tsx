@@ -1,55 +1,34 @@
 "use client";
 
 import Image from 'next/image';
-import { useState, useEffect, useRef } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { FaMapMarkerAlt, FaCode, FaTwitter, FaGithub, FaLinkedin, FaFileAlt, FaUser, FaBullseye, FaLaptopCode, FaGamepad, FaFilm } from 'react-icons/fa';
+import { useRouter } from 'next/navigation';
+import { useEffect, useRef, useState } from 'react';
+import { FaBullseye, FaCode, FaEnvelope, FaGithub, FaLaptopCode, FaLinkedin, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaXTwitter } from "react-icons/fa6";
+import { GrDocumentUser } from "react-icons/gr";
 
 const anthonyData = [
     { Icon: FaMapMarkerAlt, label: 'From', color: '#58CC02', path: '/from' },
     { Icon: FaCode, label: 'Skills', color: '#FF9600', path: '/skills' },
-    { Icon: FaTwitter, label: 'X', color: '#1CB0F6', externalLink: 'https://x.com/heyanthonny' },
+    { Icon: FaXTwitter, label: 'X', color: '#1CB0F6', externalLink: 'https://x.com/heyanthonny' },
     { Icon: FaGithub, label: 'Github', color: '#CE82FF', externalLink: 'https://github.com/AnthonyCampos1234' },
     { Icon: FaLinkedin, label: 'LinkedIn', color: '#FF4B4B', externalLink: 'https://www.linkedin.com/in/anthony-campos-8416b6253/' },
-    { Icon: FaFileAlt, label: 'Resume', color: '#1CB0F6', path: '/resume' },
-    { Icon: FaUser, label: 'About Me', color: '#FF9600', path: '/me' },
+    { Icon: GrDocumentUser, label: 'Resume', color: '#1CB0F6', path: '/resume' },
     { Icon: FaBullseye, label: 'My Goals', color: '#CE82FF', path: '/goals' },
     { Icon: FaLaptopCode, label: 'Projects', color: '#2B70C9', path: '/projects' },
-    { Icon: FaGamepad, label: 'Hobbies', color: '#58CC02', path: '/hobbies' },
-    { Icon: FaFilm, label: 'Animation', color: '#FF4B4B', path: '/animation' },
+    { Icon: FaEnvelope, label: 'Email', color: '#58CC02', action: 'copyEmail' },
 ];
 
 export default function Anthony() {
     const [rotation, setRotation] = useState(0);
     const [isMoving, setIsMoving] = useState(true);
-    const [isAnimating, setIsAnimating] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
+    const [showCopiedMessage, setShowCopiedMessage] = useState(false);
     const router = useRouter();
-    const searchParams = useSearchParams();
     const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        const returnTransition = searchParams.get('return');
-
-        if (returnTransition === 'true') {
-            const overlay = document.getElementById('back-transition-overlay');
-            const tossedImage = document.getElementById('tossed-image');
-
-            if (overlay && tossedImage) {
-                tossedImage.remove();
-                overlay.style.opacity = '0';
-                overlay.addEventListener('transitionend', () => {
-                    overlay.remove();
-                    setIsVisible(true);
-                }, { once: true });
-            } else {
-                setIsVisible(true);
-            }
-
-            window.history.replaceState({}, '', '/anthony');
-        } else {
-            setIsVisible(true);
-        }
+        setIsVisible(true);
 
         let animationId: number;
         const animate = () => {
@@ -72,17 +51,8 @@ export default function Anthony() {
         };
 
         const handleTouchEnd = () => {
-            if (touchStartY > touchEndY + 50) {
-                // Scrolled down
-            } else if (touchStartY < touchEndY - 50) {
-                // Scrolled up
-                router.push('/');
-            }
-        };
-
-        const handleWheel = (e: WheelEvent) => {
-            if (e.deltaY < 0) {
-                // Scrolled up
+            const swipeDistance = touchStartY - touchEndY;
+            if (swipeDistance > 100) {
                 router.push('/');
             }
         };
@@ -92,7 +62,6 @@ export default function Anthony() {
             container.addEventListener('touchstart', handleTouchStart);
             container.addEventListener('touchmove', handleTouchMove);
             container.addEventListener('touchend', handleTouchEnd);
-            container.addEventListener('wheel', handleWheel);
         }
 
         return () => {
@@ -101,60 +70,27 @@ export default function Anthony() {
                 container.removeEventListener('touchstart', handleTouchStart);
                 container.removeEventListener('touchmove', handleTouchMove);
                 container.removeEventListener('touchend', handleTouchEnd);
-                container.removeEventListener('wheel', handleWheel);
             }
         };
-    }, [isMoving, searchParams, router]);
+    }, [isMoving, router]);
 
-    const handleItemClick = (path: string | undefined, color: string, externalLink: string | undefined) => {
+    const handleItemClick = (path: string | undefined, externalLink: string | undefined, action: string | undefined) => {
+        if (action === 'copyEmail') {
+            navigator.clipboard.writeText('anthonyrubencampos@gmail.com').then(() => {
+                setShowCopiedMessage(true);
+                setTimeout(() => setShowCopiedMessage(false), 2000);
+            });
+            return;
+        }
+
         if (externalLink) {
             window.open(externalLink, '_blank');
             return;
         }
 
-        console.log('Transition started');
-        setIsAnimating(true);
-
-        const overlay = document.createElement('div');
-        overlay.id = 'transition-overlay';
-        overlay.style.position = 'fixed';
-        overlay.style.top = '0';
-        overlay.style.left = '0';
-        overlay.style.width = '100%';
-        overlay.style.height = '100%';
-        overlay.style.backgroundColor = color;
-        overlay.style.opacity = '0';
-        overlay.style.transition = 'opacity 0.5s ease-in-out';
-        overlay.style.zIndex = '1000';
-
-        document.body.appendChild(overlay);
-
-        requestAnimationFrame(() => {
-            overlay.style.opacity = '1';
-        });
-
-        const tossedImage = document.createElement('div');
-        tossedImage.id = 'tossed-image';
-        tossedImage.style.position = 'fixed';
-        tossedImage.style.zIndex = '1001';
-        tossedImage.style.left = '50%';
-        tossedImage.style.bottom = '0';
-        tossedImage.style.transform = 'translateX(-50%) translateY(100%)';
-        tossedImage.innerHTML = `<img src="/myface2.png" alt="Anthony's profile picture" width="200" height="200" />`;
-        document.body.appendChild(tossedImage);
-
-        requestAnimationFrame(() => {
-            tossedImage.style.animation = 'toss 1.5s ease-in-out forwards';
-        });
-
-        setTimeout(() => {
-            console.log('Navigation triggered');
-            if (path) {
-                router.push(path + '?transition=true');
-            }
-        }, 0);
-
-        setIsMoving(false);
+        if (path) {
+            router.push(path);
+        }
     };
 
     return (
@@ -188,10 +124,11 @@ export default function Anthony() {
                                 borderBottom: `6px solid ${item.color}`,
                                 left: `${left}px`,
                                 top: `${top}px`,
-                            }}
+                                ['--glow-color' as string]: item.color,
+                            } as React.CSSProperties}
                             onMouseEnter={() => setIsMoving(false)}
                             onMouseLeave={() => setIsMoving(true)}
-                            onClick={() => handleItemClick(item.path, item.color, item.externalLink)}
+                            onClick={() => handleItemClick(item.path, item.externalLink, item.action)}
                         >
                             <div className="icon-wrapper" style={{ color: item.color }}>
                                 <item.Icon />
@@ -201,6 +138,11 @@ export default function Anthony() {
                     );
                 })}
             </div>
+            {showCopiedMessage && (
+                <div className="copied-message">
+                    Email copied to clipboard!
+                </div>
+            )}
             <style jsx>{`
         .about-me-title {
           position: absolute;
@@ -246,6 +188,16 @@ export default function Anthony() {
         .about-me-item:hover {
           transform: scale(1.05);
           box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+          animation: glow 1.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+          from {
+            box-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color), 0 0 15px var(--glow-color), 0 0 20px var(--glow-color);
+          }
+          to {
+            box-shadow: 0 0 10px var(--glow-color), 0 0 20px var(--glow-color), 0 0 30px var(--glow-color), 0 0 40px var(--glow-color);
+          }
         }
 
         .icon-wrapper {
@@ -267,7 +219,7 @@ export default function Anthony() {
   }
 
   50% {
-    transform: translateX(-25%) translateY(-60vh) rotate(0deg);
+    transform: translateX(-25%) translateY(-20vh) rotate(0deg); // Further reduced height from -30vh to -20vh
   }
 
   100% {
@@ -284,6 +236,18 @@ export default function Anthony() {
   min-height: 100vh;
   height: 100vh;
   overflow-y: auto;
+}
+
+.copied-message {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  z-index: 1000;
 }
             `}</style>
         </div>

@@ -1,173 +1,67 @@
 "use client";
 
-import { useEffect, useState, useRef } from 'react';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { FaChevronLeft, FaMapMarkerAlt } from 'react-icons/fa';
 import ItemPage from '../components/ItemPage';
-import { FaMapMarkerAlt } from 'react-icons/fa';
-import { useRouter, useSearchParams } from 'next/navigation';
 import '../styles/timeline.css';
 
 export default function From() {
     const router = useRouter();
-    const searchParams = useSearchParams();
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
-        const transition = searchParams.get('transition');
-        console.log('From page loaded, transition:', transition);
-
-        const handleTransition = () => {
-            const tossedImage = document.getElementById('tossed-image');
-            const overlay = document.getElementById('transition-overlay');
-
-            console.log('Tossed image:', tossedImage);
-            console.log('Overlay:', overlay);
-
-            const completeTrasition = () => {
-                console.log('Completing transition');
-                setIsVisible(true);
-
-                if (overlay) {
-                    console.log('Fading out overlay');
-                    overlay.style.opacity = '0';
-                    overlay.addEventListener('transitionend', () => {
-                        console.log('Overlay transition ended, removing overlay');
-                        overlay.remove();
-                    }, { once: true });
-                } else {
-                    console.log('No overlay found to remove');
-                }
-
-                if (tossedImage) {
-                    console.log('Removing tossed image');
-                    tossedImage.remove();
-                }
-
-                // Remove the transition parameter from the URL
-                window.history.replaceState({}, '', '/from');
-            };
-
-            if (tossedImage) {
-                console.log('Waiting for toss animation to end');
-                tossedImage.addEventListener('animationend', completeTrasition, { once: true });
-            } else {
-                console.log('No tossed image found, completing transition immediately');
-                completeTrasition();
-            }
-        };
-
-        if (transition === 'true') {
-            // Wait a bit to ensure the overlay and tossed image are in the DOM
-            setTimeout(handleTransition, 100);
-        } else {
-            console.log('No transition, showing content immediately');
-            setIsVisible(true);
-        }
-
-        // Fallback to ensure the content becomes visible
-        const fallbackTimer = setTimeout(() => {
-            console.log('Fallback timer triggered');
-            setIsVisible(true);
-            const overlay = document.getElementById('transition-overlay');
-            if (overlay) {
-                overlay.style.opacity = '0';
-                overlay.addEventListener('transitionend', () => {
-                    overlay.remove();
-                }, { once: true });
-            }
-        }, 2000);
-
-        return () => clearTimeout(fallbackTimer);
-    }, [searchParams, router]);
+        setIsVisible(true);
+    }, []);
 
     const handleBackClick = () => {
-        console.log('Back transition started');
-
-        const overlay = document.createElement('div');
-        overlay.id = 'back-transition-overlay';
-        overlay.style.position = 'fixed';
-        overlay.style.top = '0';
-        overlay.style.left = '0';
-        overlay.style.width = '100%';
-        overlay.style.height = '100%';
-        overlay.style.backgroundColor = '#58CC02';
-        overlay.style.opacity = '0';
-        overlay.style.transition = 'opacity 0.5s ease-in-out';
-        overlay.style.zIndex = '1000';
-
-        document.body.appendChild(overlay);
-
-        // Fade in the overlay
-        requestAnimationFrame(() => {
-            overlay.style.opacity = '1';
-        });
-
-        // Create and animate the tossed image
-        const tossedImage = document.createElement('div');
-        tossedImage.id = 'tossed-image';
-        tossedImage.style.position = 'fixed';
-        tossedImage.style.zIndex = '1001';
-        tossedImage.style.left = '50%';
-        tossedImage.style.bottom = '0'; // Changed from '0' to '-10%'
-        tossedImage.style.transform = 'translateX(-50%) translateY(100%)';
-        tossedImage.innerHTML = `<img src="/myface2.png" alt="Anthony's profile picture" width="200" height="200" />`; // Increased size slightly
-        document.body.appendChild(tossedImage);
-
-        // Start the tossing animation
-        requestAnimationFrame(() => {
-            tossedImage.style.animation = 'toss 1.5s ease-in-out forwards';
-        });
-
-        // Navigate after the overlay is fully visible and animation is complete
-        setTimeout(() => {
-            console.log('Navigation back triggered');
-            router.replace('/anthony?return=true');
-        }, 1700);
+        router.push('/anthony');
     };
 
     const timelineItems = [
         {
-            year: '1990-2000',
+            year: '2005-2014',
             location: 'San Diego, California',
             description: 'Born and raised in sunny San Diego. Del Mar was my favorite beach, where I spent countless happy hours enjoying the perfect weather and beautiful coastline.',
             image: '/san-diego.jpg',
             facts: [
-                'Del Mar beach is known for its pristine sand and excellent surfing conditions.',
-                'The San Diego Zoo, one of the largest in the world, was a frequent family destination.',
-                'Enjoyed the year-round Mediterranean climate perfect for outdoor activities.'
+                'All of my family outside my immediate family is in San Diego and Mexico.',
+                'I miss the weather, the family filled holidays, and the beach.',
+                'I plan to have a beach house in San Diego.'
             ]
         },
         {
-            year: '2000-2012',
+            year: '2014-2023',
             location: 'Peters Township, Pennsylvania',
-            description: 'Moved to Peters Township, just outside Pittsburgh, at the start of 4th grade. Fell in love with the area and experienced the vibrant suburban life and passionate sports culture.',
+            description: 'Moved to Peters Township, just outside Pittsburgh, at the start of 4th grade. I got to experience the four seasons, and the snow.',
             image: '/pittsburgh.jpg',
             facts: [
-                'Peters Township is known for its excellent schools and community-oriented lifestyle.',
-                'Experienced all four seasons, a big change from San Diego\'s constant sunshine.',
-                'Grew up cheering for the Steelers, Pirates, and Penguins.'
+                'Moving across the country was a big change. Especially when it came to culture.',
+                'No more beaches, but I got to experience the four seasons.',
+                'Luckily, I got to attend some of the best schools in the area.'
             ]
         },
         {
-            year: '2012',
+            year: '2023',
             location: 'Lewisburg, Pennsylvania',
-            description: 'Briefly lived in Lewisburg right before starting college. Though the stay was short, it was a significant transition point in my life.',
+            description: 'Briefly lived in Lewisburg right before starting college.',
             image: '/lewisburg.jpg',
             facts: [
-                'Home to Bucknell University, founded in 1846.',
-                'Known for its charming downtown and historic architecture.',
-                'Situated along the beautiful Susquehanna River.'
+                'The day after moving in, we were on the road to Boston.',
+                'I enjoy the peace and quiet of Lewisburg.',
+                'When Bucknell students move in the town lights up with life.'
             ]
         },
         {
-            year: '2012-Present',
+            year: '2023-Present',
             location: 'Boston, Massachusetts',
-            description: 'Moved to Boston for college at Northeastern University. Embracing the rich academic environment, historic charm, and vibrant city life.',
+            description: 'Moved to Boston for Northeastern University. Oh, I have yet to truly explore the city due to my ambitions taking up all my time.',
             image: '/boston.jpg',
             facts: [
-                'Home to numerous world-renowned universities and colleges.',
-                'Rich in American history, with landmarks like the Freedom Trail.',
-                'Experiencing the distinct New England seasons, including the beautiful fall foliage.'
+                'Truly enjoy the city life.',
+                'Love the Northeastern University campus.',
+                'I can feel the history in the older buildings.'
             ]
         },
     ];
@@ -193,7 +87,10 @@ export default function From() {
 
     return (
         <div style={{ opacity: isVisible ? 1 : 0, transition: 'opacity 0.5s ease-in-out' }}>
-            <ItemPage Icon={FaMapMarkerAlt} title="My Journey" color="#58CC02" onBackClick={handleBackClick}>
+            <div className="playful-back-button" onClick={handleBackClick}>
+                <FaChevronLeft />
+            </div>
+            <ItemPage Icon={FaMapMarkerAlt} title="My Journey" color="#58CC02">
                 <div className="timeline-container">
                     {timelineItems.map((item, index) => (
                         <div key={index} className={`timeline-item ${index % 2 === 0 ? 'left' : 'right'}`}>
@@ -214,6 +111,33 @@ export default function From() {
                     ))}
                 </div>
             </ItemPage>
+            <style jsx>{`
+                .playful-back-button {
+                    position: fixed;
+                    top: 20px;
+                    left: 20px;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    background-color: #58CC02;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    z-index: 1000;
+                }
+
+                .playful-back-button:hover {
+                    transform: scale(1.1);
+                    box-shadow: 0 0 15px rgba(88, 204, 2, 0.5);
+                }
+
+                .playful-back-button :global(svg) {
+                    color: white;
+                    font-size: 24px;
+                }
+            `}</style>
         </div>
     );
 }

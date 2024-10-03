@@ -1,58 +1,162 @@
 "use client";
 
-import { Nunito } from 'next/font/google'
-import { useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import Home from './home/page';
-import Anthony from './anthony/page';
-import { useScrollBetweenPages } from './useScrollBetweenPages';
+import dynamic from 'next/dynamic';
+import { Nunito } from 'next/font/google';
+import { useEffect, useState } from 'react';
+
+const Anthony = dynamic(() => import('./anthony/page'), { ssr: false });
 
 const nunito = Nunito({ subsets: ['latin'] })
 
 export default function RootPage() {
-  const { currentPage, goToPage } = useScrollBetweenPages(1);
-  const router = useRouter();
-  const searchParams = useSearchParams();
+  const [showIntro, setShowIntro] = useState(true);
+  const [currentTextIndex, setCurrentTextIndex] = useState(0);
+  const [fadeOut, setFadeOut] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const texts = [
+    "Failed Startups",
+    "Market Insights Gained",
+    "Failed Code",
+    "Bugs Fixed & Skills Sharpened",
+    "Failed Tests",
+    "Study Strategies Refined",
+    "Failures Transformed into\nStepping Stones"
+  ];
 
   useEffect(() => {
-    const returnParam = searchParams.get('return');
-    if (returnParam === 'true') {
-      goToPage(2);
-      router.replace('/');
-    }
-  }, [searchParams, router, goToPage]);
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 100);
 
-  console.log('Current page:', currentPage); // Debug log
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    if (!showIntro || !isLoaded) return;
+
+    const timer = setTimeout(() => {
+      if (currentTextIndex < texts.length - 1) {
+        setCurrentTextIndex(currentTextIndex + 1);
+      } else {
+        setFadeOut(true);
+        setTimeout(() => setShowIntro(false), 1000);
+      }
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [showIntro, currentTextIndex, isLoaded]);
 
   return (
     <div className={`${nunito.className} page-container`}>
-      <div className={`home-page ${currentPage === 1 ? 'active' : ''}`}>
-        <Home onScrollDown={() => goToPage(2)} />
-      </div>
-      <div className={`anthony-page ${currentPage === 2 ? 'active' : ''}`}>
-        <Anthony />
-      </div>
+      {isLoaded && (
+        <>
+          <div className={`intro-animation ${fadeOut ? 'fade-out' : ''} ${!showIntro ? 'hidden' : ''}`}>
+            <div className="content">
+              <h1 className="name">
+                {"Anthony Campos".split('').map((char, index) => (
+                  <span key={index} style={{ animationDelay: `${index * 0.1}s` }}>{char === ' ' ? '\u00A0' : char}</span>
+                ))}
+              </h1>
+              <div className="skill-container">
+                {texts.map((text, index) => (
+                  <p
+                    key={text}
+                    className={`skill ${index === currentTextIndex ? 'active' : ''}`}
+                  >
+                    {text}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className={`main-content ${!showIntro ? 'fade-in' : ''}`}>
+            <Anthony />
+          </div>
+        </>
+      )}
       <style jsx>{`
         .page-container {
+          min-height: 100vh;
           height: 100vh;
-          overflow: hidden;
+          overflow-y: auto;
           position: relative;
+          background-color: #1E1E1E;
         }
-        .home-page, .anthony-page {
+        .intro-animation {
           position: absolute;
           top: 0;
           left: 0;
           width: 100%;
-          height: 100%;
-          transition: all 0.8s cubic-bezier(0.645, 0.045, 0.355, 1);
+          height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          opacity: 1;
+          transition: opacity 1s ease-out;
         }
-        .home-page {
-          transform: ${currentPage === 1 ? 'translateY(0) scale(1)' : 'translateY(-100%) scale(0.9)'};
-          opacity: ${currentPage === 1 ? 1 : 0};
+        .intro-animation.fade-out {
+          opacity: 0;
         }
-        .anthony-page {
-          transform: ${currentPage === 2 ? 'translateY(0) scale(1)' : 'translateY(100%) scale(0.9)'};
-          opacity: ${currentPage === 2 ? 1 : 0};
+        .intro-animation.hidden {
+          display: none;
+        }
+        .main-content {
+          opacity: 0;
+          transition: opacity 1s ease-in;
+        }
+        .main-content.fade-in {
+          opacity: 1;
+        }
+        .content {
+          text-align: center;
+          color: #FFFFFF;
+        }
+        .name {
+          font-size: 4rem;
+          margin-bottom: 1rem;
+          font-weight: 300;
+        }
+        .name span {
+          display: inline-block;
+          opacity: 0;
+          transform: translateY(1em);
+          animation: revealChar 0.5s forwards;
+        }
+        .skill-container {
+          height: 5rem; 
+          position: relative;
+          overflow: hidden;
+        }
+        .skill {
+          font-size: 1.6rem; 
+          line-height: 1.2; 
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          opacity: 0;
+          transform: translateY(20px);
+          transition: all 0.5s ease;
+          color: #CE82FF;
+          white-space: pre-line; 
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          height: 100%; 
+        }
+        .skill.active {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        @keyframes revealChar {
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
         }
       `}</style>
     </div>

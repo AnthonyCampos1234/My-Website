@@ -67,7 +67,6 @@
 
 .timeline-item.right .timeline-content {
     margin-left: 10px;
-    /* Add this line */
 }
 
 .timeline-content:hover {
@@ -173,6 +172,5 @@
 
     .timeline-item.right .timeline-content {
         margin-left: 0;
-        /* Add this line */
     }
 }
