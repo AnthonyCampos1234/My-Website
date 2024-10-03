@@ -13,7 +13,7 @@ const anthonyData = [
     { Icon: FaXTwitter, label: 'X', color: '#1CB0F6', externalLink: 'https://x.com/heyanthonny' },
     { Icon: FaGithub, label: 'Github', color: '#CE82FF', externalLink: 'https://github.com/AnthonyCampos1234' },
     { Icon: FaLinkedin, label: 'LinkedIn', color: '#FF4B4B', externalLink: 'https://www.linkedin.com/in/anthony-campos-8416b6253/' },
-    { Icon: GrDocumentUser, label: 'Resume', color: '#1CB0F6', path: '/resume' },
+    { Icon: GrDocumentUser, label: 'Resume', color: '#1CB0F6', action: 'openResume' },
     { Icon: FaBullseye, label: 'My Goals', color: '#CE82FF', path: '/goals' },
     { Icon: FaLaptopCode, label: 'Projects', color: '#2B70C9', path: '/projects' },
     { Icon: FaEnvelope, label: 'Email', color: '#58CC02', action: 'copyEmail' },
@@ -80,6 +80,11 @@ export default function Anthony() {
                 setShowCopiedMessage(true);
                 setTimeout(() => setShowCopiedMessage(false), 2000);
             });
+            return;
+        }
+
+        if (action === 'openResume') {
+            window.open('/AnthonyResume copy.pdf', '_blank');
             return;
         }
 
