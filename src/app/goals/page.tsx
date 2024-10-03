@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { FaBullseye, FaCheckCircle, FaChevronLeft, FaGithub, FaHourglassHalf, FaPen, FaReact, FaRocket } from 'react-icons/fa';
+import { FaBriefcase, FaBullseye, FaCheckCircle, FaChevronLeft, FaGithub, FaGraduationCap, FaHourglassHalf, FaLanguage, FaRobot, FaRocket, FaShoppingCart, FaStickyNote, FaTrophy } from 'react-icons/fa';
 import ItemPage from '../components/ItemPage';
 import '../styles/goals.css';
 
@@ -28,22 +28,52 @@ export default function Goals() {
 
     const goals: Goal[] = [
         {
-            title: "Master React and Next.js",
-            description: "Deepen understanding of React hooks, server-side rendering, and Next.js 13 features.",
+            title: "Integrate LLMs with Police Body Cams",
+            description: "Develop an AI system using Large Language Models to analyze body cam footage in real-time, alerting backup when needed without officer intervention.",
             status: "in-progress",
-            icon: FaReact
+            icon: FaRobot
         },
         {
-            title: "Contribute to Open Source",
-            description: "Make meaningful contributions to at least 3 open-source projects in the next 6 months.",
+            title: "Revolutionize E-commerce with Bulk Selling",
+            description: "Create a universal bulk selling solution for all e-commerce platforms, enhancing efficiency for both sellers and buyers.",
             status: "future",
+            icon: FaShoppingCart
+        },
+        {
+            title: "Expand Avisari Adoption in Schools",
+            description: "Continue promoting and improving Avisari to facilitate better connections between advisors and students in educational institutions.",
+            status: "in-progress",
+            icon: FaGraduationCap
+        },
+        {
+            title: "EduConnect Hackathon Success",
+            description: "Achieved finalist status in the hackathon with the EduConnect project, aiming to improve educational connectivity.",
+            status: "completed",
+            icon: FaTrophy
+        },
+        {
+            title: "Enhance GitHub Portfolio",
+            description: "Continuously improve and add new projects to my GitHub portfolio at github.com/AnthonyCampos1234.",
+            status: "in-progress",
             icon: FaGithub
         },
         {
-            title: "Launch Personal Blog",
-            description: "Create and launch a tech blog to share knowledge and experiences in web development.",
+            title: "Secure Duolingo SWE Internship",
+            description: "Successfully obtain a Software Engineering Internship at Duolingo through their Thrive program.",
+            status: "future",
+            icon: FaLanguage
+        },
+        {
+            title: "Full-time Position at Duolingo",
+            description: "Work towards securing a full-time Software Engineering position at Duolingo after completing the internship.",
+            status: "future",
+            icon: FaBriefcase
+        },
+        {
+            title: "Develop Nota Project",
+            description: "Successfully created Nota, a note-taking application with advanced features, showcasing full-stack development skills.",
             status: "completed",
-            icon: FaPen
+            icon: FaStickyNote
         },
     ];
 
