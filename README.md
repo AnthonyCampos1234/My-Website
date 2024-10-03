@@ -13,7 +13,7 @@ Visit me [anthonycampos.dev](https://www.anthonycampos.dev)
 - Responsive design
 - Interactive UI elements
 - Smooth transitions between pages
-- Sections for skills, projects, resume, hobbies, and more
+- Sections for skills, projects, resume, and more
 
 ## Technologies Used
 
