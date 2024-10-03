@@ -13,15 +13,7 @@ export default function RootPage() {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [fadeOut, setFadeOut] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
-  const texts = [
-    "Failed Startups",
-    "Market Insights Gained",
-    "Failed Code",
-    "Bugs Fixed & Skills Sharpened",
-    "Failed Tests",
-    "Study Strategies Refined",
-    "Failures Transformed into\nStepping Stones"
-  ];
+  const [showSkipButton, setShowSkipButton] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -46,6 +38,35 @@ export default function RootPage() {
     return () => clearTimeout(timer);
   }, [showIntro, currentTextIndex, isLoaded]);
 
+  useEffect(() => {
+    if (showIntro && isLoaded) {
+      const timer = setTimeout(() => {
+        setShowSkipButton(true);
+      }, 1000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [showIntro, isLoaded]);
+
+  const handleSkip = () => {
+    setFadeOut(true);
+    setCurrentTextIndex(texts.length - 1);
+    setTimeout(() => {
+      setShowIntro(false);
+      setShowSkipButton(false);
+    }, 1000);
+  };
+
+  const texts = [
+    "Failed Startups",
+    "Market Insights Gained",
+    "Failed Code",
+    "Bugs Fixed & Skills Sharpened",
+    "Failed Tests",
+    "Study Strategies Refined",
+    "Failures Transformed into\nStepping Stones"
+  ];
+
   return (
     <div className={`${nunito.className} page-container`}>
       {isLoaded && (
@@ -69,6 +90,11 @@ export default function RootPage() {
               </div>
             </div>
           </div>
+          {showSkipButton && showIntro && (
+            <button className="skip-button" onClick={handleSkip}>
+              Skip
+            </button>
+          )}
           <div className={`main-content ${!showIntro ? 'fade-in' : ''}`}>
             <Anthony />
           </div>
@@ -93,6 +119,7 @@ export default function RootPage() {
           align-items: center;
           opacity: 1;
           transition: opacity 1s ease-out;
+          z-index: 5;
         }
         .intro-animation.fade-out {
           opacity: 0;
@@ -147,6 +174,24 @@ export default function RootPage() {
         .skill.active {
           opacity: 1;
           transform: translateY(0);
+        }
+        .skip-button {
+          position: absolute;
+          bottom: 20px;
+          right: 20px;
+          background-color: rgba(255, 255, 255, 0.2);
+          color: #FFFFFF;
+          border: none;
+          padding: 8px 16px;
+          border-radius: 4px;
+          cursor: pointer;
+          font-size: 14px;
+          transition: background-color 0.3s ease;
+          z-index: 10;
+        }
+
+        .skip-button:hover {
+          background-color: rgba(255, 255, 255, 0.3);
         }
         @keyframes revealChar {
           to {
