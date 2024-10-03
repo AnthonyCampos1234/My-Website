@@ -24,7 +24,7 @@ export default function From() {
             year: '2005-2014',
             location: 'San Diego, California',
             description: 'Born and raised in sunny San Diego. Del Mar was my favorite beach, where I spent countless happy hours enjoying the perfect weather and beautiful coastline.',
-            image: '/san-diego.jpg',
+            image: '/Pic1.png',
             facts: [
                 'All of my family outside my immediate family is in San Diego and Mexico.',
                 'I miss the weather, the family filled holidays, and the beach.',
@@ -35,7 +35,7 @@ export default function From() {
             year: '2014-2023',
             location: 'Peters Township, Pennsylvania',
             description: 'Moved to Peters Township, just outside Pittsburgh, at the start of 4th grade. I got to experience the four seasons, and the snow.',
-            image: '/pittsburgh.jpg',
+            image: '/Pic2.png',
             facts: [
                 'Moving across the country was a big change. Especially when it came to culture.',
                 'No more beaches, but I got to experience the four seasons.',
@@ -46,7 +46,7 @@ export default function From() {
             year: '2023',
             location: 'Lewisburg, Pennsylvania',
             description: 'Briefly lived in Lewisburg right before starting college.',
-            image: '/lewisburg.jpg',
+            image: '/Pic3.png',
             facts: [
                 'The day after moving in, we were on the road to Boston.',
                 'I enjoy the peace and quiet of Lewisburg.',
@@ -57,7 +57,7 @@ export default function From() {
             year: '2023-Present',
             location: 'Boston, Massachusetts',
             description: 'Moved to Boston for Northeastern University. Oh, I have yet to truly explore the city due to my ambitions taking up all my time.',
-            image: '/boston.jpg',
+            image: '/Pic4.png',
             facts: [
                 'Truly enjoy the city life.',
                 'Love the Northeastern University campus.',
