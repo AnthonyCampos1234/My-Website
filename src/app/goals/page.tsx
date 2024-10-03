@@ -60,7 +60,7 @@ export default function Goals() {
         {
             title: "Secure Duolingo SWE Internship",
             description: "Successfully obtain a Software Engineering Internship at Duolingo through their Thrive program.",
-            status: "future",
+            status: "in-progress",
             icon: FaLanguage
         },
         {
