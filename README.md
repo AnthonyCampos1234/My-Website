@@ -3,8 +3,8 @@
 This repository contains the source code for my personal portfolio website. The website is built using Next.js, React, and TypeScript, showcasing who I am and what I have done.
 
 <div style="display: flex; justify-content: space-around; flex-wrap: wrap;">
-  <img src="pics/portoflioPic1" alt="Home Page" width="325" style="margin: 10px;"/>
-  <img src="pics/portfolioPic2" alt="Home Page" width="325" style="margin: 10px;"/>
+  <img src="pics/portoflioPic1.png" alt="Home Page" width="325" style="margin: 10px;"/>
+  <img src="pics/portfolioPic2.png" alt="Home Page" width="325" style="margin: 10px;"/>
 </div>
 
 ## Features
