@@ -101,7 +101,7 @@ export default function Anthony() {
     return (
         <div
             ref={containerRef}
-            className="min-h-screen flex flex-col items-center justify-center p-8 relative bg-[#1E1E1E] overflow-hidden"
+            className="min-h-screen flex flex-col items-center justify-center p-4 relative bg-[#1E1E1E] overflow-hidden"
             style={{
                 opacity: isVisible ? 1 : 0,
                 transition: 'opacity 0.5s ease-in-out'
@@ -149,111 +149,151 @@ export default function Anthony() {
                 </div>
             )}
             <style jsx>{`
-        .about-me-title {
-          position: absolute;
-          top: 40px;
-          left: 40px;
-          font-size: 2.5rem;
-          font-weight: bold;
-          color: #CE82FF;
-          text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-        }
+                .about-me-title {
+                  position: absolute;
+                  top: 40px;
+                  left: 40px;
+                  font-size: 2.5rem;
+                  font-weight: bold;
+                  color: #CE82FF;
+                  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+                }
 
-        .about-me-container {
-          position: relative;
-          width: 700px;
-          height: 700px;
-        }
+                .about-me-container {
+                  position: relative;
+                  width: 700px;
+                  height: 700px;
+                  transform-origin: center center;
+                  transform: scale(1);
+                  transition: transform 0.3s ease;
+                }
 
-        .profile-picture {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          z-index: 2;
-        }
+                @media (max-width: 768px) {
+                  .about-me-container {
+                    transform: scale(0.6);
+                  }
 
-        .about-me-item {
-          position: absolute;
-          width: 120px;
-          height: 120px;
-          background: #2B2B2B;
-          border-radius: 20px;
-          padding: 0.8rem;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          text-align: center;
-          transition: transform 0.3s ease, box-shadow 0.3s ease;
-          cursor: pointer;
-          box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-        }
+                  .profile-picture {
+                    transform: translate(-50%, -50%) scale(0.9);
+                  }
 
-        .about-me-item:hover {
-          transform: scale(1.05);
-          box-shadow: 0 12px 24px rgba(0,0,0,0.3);
-          animation: glow 1.5s ease-in-out infinite alternate;
-        }
+                  .about-me-item {
+                    transform: scale(1.0);
+                  }
 
-        @keyframes glow {
-          from {
-            box-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color), 0 0 15px var(--glow-color), 0 0 20px var(--glow-color);
-          }
-          to {
-            box-shadow: 0 0 10px var(--glow-color), 0 0 20px var(--glow-color), 0 0 30px var(--glow-color), 0 0 40px var(--glow-color);
-          }
-        }
+                  .about-me-item:hover {
+                    transform: scale(1.25);
+                  }
+                }
 
-        .icon-wrapper {
-          font-size: 2rem;
-          margin-bottom: 0.4rem;
-          transition: all 0.3s ease;
-        }
+                @media (max-width: 480px) {
+                  .about-me-container {
+                    transform: scale(0.45);
+                  }
 
-        .item-label {
-          font-size: 0.9rem;
-          font-weight: 700;
-          margin-bottom: 0.2rem;
-          color: #FFFFFF;
-        }
+                  .profile-picture {
+                    transform: translate(-50%, -50%) scale(0.8);
+                  }
 
-       @keyframes toss {
-  0% {
-    transform: translateX(-50%) translateY(120%) rotate(-15deg);
-  }
+                  .about-me-item {
+                    transform: scale(1.2);
+                  }
 
-  50% {
-    transform: translateX(-25%) translateY(-20vh) rotate(0deg); // Further reduced height from -30vh to -20vh
-  }
+                  .about-me-item:hover {
+                    transform: scale(1.55);
+                  }
+                }
 
-  100% {
-    transform: translateX(0%) translateY(120%) rotate(15deg);
-  }
-}
+                .profile-picture {
+                  position: absolute;
+                  top: 50%;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+                  z-index: 2;
+                }
 
-#tossed-image {
-  pointer-events: none;
-}
+                .about-me-item {
+                  position: absolute;
+                  width: 120px;
+                  height: 120px;
+                  background: #2B2B2B;
+                  border-radius: 20px;
+                  padding: 0.8rem;
+                  display: flex;
+                  flex-direction: column;
+                  align-items: center;
+                  justify-content: center;
+                  text-align: center;
+                  transition: transform 0.3s ease, box-shadow 0.3s ease;
+                  cursor: pointer;
+                  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+                }
 
-/* Add this new style */
-.min-h-screen {
-  min-height: 100vh;
-  height: 100vh;
-  overflow-y: auto;
-}
+                .about-me-item:hover {
+                  transform: scale(1.05);
+                  box-shadow: 0 12px 24px rgba(0,0,0,0.3);
+                  animation: glow 1.5s ease-in-out infinite alternate;
+                }
 
-.copied-message {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  z-index: 1000;
-}
+                @keyframes glow {
+                  from {
+                    box-shadow: 0 0 5px var(--glow-color), 0 0 10px var(--glow-color), 0 0 15px var(--glow-color), 0 0 20px var(--glow-color);
+                  }
+                  to {
+                    box-shadow: 0 0 10px var(--glow-color), 0 0 20px var(--glow-color), 0 0 30px var(--glow-color), 0 0 40px var(--glow-color);
+                  }
+
+                }
+
+                .icon-wrapper {
+                  font-size: 2rem;
+                  margin-bottom: 0.4rem;
+                  transition: all 0.3s ease;
+                }
+
+                .item-label {
+                  font-size: 0.9rem;
+                  font-weight: 700;
+                  margin-bottom: 0.2rem;
+                  color: #FFFFFF;
+                }
+
+                @keyframes toss {
+                  0% {
+                    transform: translateX(-50%) translateY(120%) rotate(-15deg);
+                  }
+
+                  50% {
+                    transform: translateX(-25%) translateY(-20vh) rotate(0deg); // Further reduced height from -30vh to -20vh
+                  }
+
+                  100% {
+                    transform: translateX(0%) translateY(120%) rotate(15deg);
+                  }
+                }
+
+                #tossed-image {
+                  pointer-events: none;
+                }
+
+                /* Add this new style */
+                .min-h-screen {
+                  min-height: 100vh;
+                  height: 100vh;
+                  overflow-y: auto;
+                }
+
+                .copied-message {
+                  position: fixed;
+                  bottom: 20px;
+                  left: 50%;
+                  transform: translateX(-50%);
+                  background-color: #4CAF50;
+                  color: white;
+                  padding: 10px 20px;
+                  border-radius: 5px;
+                  z-index: 1000;
+                }
             `}</style>
         </div>
     );

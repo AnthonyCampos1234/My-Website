@@ -75,12 +75,12 @@ export default function Skills() {
     };
 
     return (
-        <div style={{ opacity: isVisible ? 1 : 0, transition: 'opacity 0.5s ease-in-out' }}>
+        <div className={`skills-container ${isVisible ? 'visible' : ''}`}>
             <div className="playful-back-button" onClick={handleBackClick}>
                 <FaChevronLeft />
             </div>
             <ItemPage Icon={FaCode} title="My Skills" color="#FF9600">
-                <div className="skills-container">
+                <div className="skills-grid">
                     {skillCategories.map((category, categoryIndex) => (
                         <div key={categoryIndex} className="skill-category">
                             <h2>{category.category}</h2>
@@ -106,6 +106,19 @@ export default function Skills() {
                 </div>
             </ItemPage>
             <style jsx>{`
+                .skills-container {
+                    width: 100%;
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    padding: 20px;
+                    opacity: 0;
+                    transition: opacity 0.5s ease-in-out;
+                }
+
+                .skills-container.visible {
+                    opacity: 1;
+                }
+
                 .playful-back-button {
                     position: fixed;
                     top: 20px;
@@ -130,6 +143,36 @@ export default function Skills() {
                 .playful-back-button :global(svg) {
                     color: white;
                     font-size: 24px;
+                }
+
+                @media (max-width: 768px) {
+                    .skills-container {
+                        padding: 10px;
+                    }
+
+                    .playful-back-button {
+                        width: 40px;
+                        height: 40px;
+                    }
+
+                    .playful-back-button :global(svg) {
+                        font-size: 20px;
+                    }
+                }
+
+                @media (max-width: 480px) {
+                    .skills-container {
+                        padding: 5px;
+                    }
+
+                    .playful-back-button {
+                        width: 30px;
+                        height: 30px;
+                    }
+
+                    .playful-back-button :global(svg) {
+                        font-size: 16px;
+                    }
                 }
             `}</style>
         </div>

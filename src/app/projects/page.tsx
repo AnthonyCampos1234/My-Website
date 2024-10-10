@@ -99,6 +99,19 @@ export default function Projects() {
                 </div>
             </ItemPage>
             <style jsx>{`
+                .projects-container {
+                    width: 100%;
+                    max-width: 1200px;
+                    margin: 0 auto;
+                    padding: 20px;
+                    opacity: 0;
+                    transition: opacity 0.5s ease-in-out;
+                }
+
+                .projects-container.visible {
+                    opacity: 1;
+                }
+
                 .playful-back-button {
                     position: fixed;
                     top: 20px;
@@ -123,6 +136,36 @@ export default function Projects() {
                 .playful-back-button :global(svg) {
                     color: white;
                     font-size: 24px;
+                }
+
+                @media (max-width: 768px) {
+                    .projects-container {
+                        padding: 10px;
+                    }
+
+                    .playful-back-button {
+                        width: 40px;
+                        height: 40px;
+                    }
+
+                    .playful-back-button :global(svg) {
+                        font-size: 20px;
+                    }
+                }
+
+                @media (max-width: 480px) {
+                    .projects-container {
+                        padding: 5px;
+                    }
+
+                    .playful-back-button {
+                        width: 30px;
+                        height: 30px;
+                    }
+
+                    .playful-back-button :global(svg) {
+                        font-size: 16px;
+                    }
                 }
             `}</style>
         </div>

@@ -137,11 +137,19 @@ export default function RootPage() {
         .content {
           text-align: center;
           color: #FFFFFF;
+          padding: 1rem;
+          width: 90%;
+          max-width: 600px;
         }
         .name {
-          font-size: 4rem;
+          font-size: 2rem;
           margin-bottom: 1rem;
           font-weight: 300;
+        }
+        @media (min-width: 768px) {
+          .name {
+            font-size: 4rem;
+          }
         }
         .name span {
           display: inline-block;
@@ -150,13 +158,18 @@ export default function RootPage() {
           animation: revealChar 0.5s forwards;
         }
         .skill-container {
-          height: 5rem; 
+          height: 4rem;
           position: relative;
           overflow: hidden;
         }
+        @media (min-width: 768px) {
+          .skill-container {
+            height: 5rem;
+          }
+        }
         .skill {
-          font-size: 1.6rem; 
-          line-height: 1.2; 
+          font-size: 1rem;
+          line-height: 1.2;
           position: absolute;
           top: 0;
           left: 0;
@@ -165,11 +178,16 @@ export default function RootPage() {
           transform: translateY(20px);
           transition: all 0.5s ease;
           color: #CE82FF;
-          white-space: pre-line; 
+          white-space: pre-line;
           display: flex;
           flex-direction: column;
           justify-content: center;
-          height: 100%; 
+          height: 100%;
+        }
+        @media (min-width: 768px) {
+          .skill {
+            font-size: 1.6rem;
+          }
         }
         .skill.active {
           opacity: 1;
@@ -189,7 +207,6 @@ export default function RootPage() {
           transition: background-color 0.3s ease;
           z-index: 10;
         }
-
         .skip-button:hover {
           background-color: rgba(255, 255, 255, 0.3);
         }
