@@ -178,7 +178,7 @@ export default function Anthony() {
                   }
 
                   .about-me-item {
-                    transform: scale(1.0);
+                    transform: scale(2.0);
                   }
 
                   .about-me-item:hover {
